@@ -13,6 +13,8 @@ Funcionalidades adicionales como la gestión de contraseñas (agregar, eliminar,
 
 import secrets, string
 
+from database import guardar_contraseña
+
 #Funcion para generar contraseñas de manera aleatoria
 def generar_contraseña (longitud):
     caracteres = string.ascii_letters + string.digits + string.punctuation
@@ -31,15 +33,18 @@ def main():
             print("Ingrese solo valores numericos.")
 
 
-    clave = input("Introduce 'H' para generar la contraseña: ")
+    while True:
 
+        clave = input("Introduce 'H' para generar la contraseña: ")
+        if clave.lower() == 'h':
+            nueva_contraseña = generar_contraseña(longitud)
+            print("La contraseña generada es:", nueva_contraseña)
+            # Guardar la contraseña en la base de datos
+            guardar_contraseña(nueva_contraseña)
+            break
+        else:
+            print("Valor invalido, siga las intrucciones dadas.")
 
-
-    if clave.lower() == 'h':
-        print(generar_contraseña(longitud))
-    else:
-        print("Valor invalido, introduce 'H' para generar una contraseña")
-    
 
 if __name__ == "__main__":
     main()
